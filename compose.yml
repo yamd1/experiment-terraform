@@ -1,0 +1,16 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/compose-spec/compose-spec/master/schema/compose-spec.json
+
+services:
+  aws:
+    image: localstack/localstack:3.3.0
+    ports:
+      - 127.0.0.1:4566:4566
+      - 127.0.0.1:4510-4559:4510-4559
+    environment:
+      DOCKER_HOST: unix:///var/run/docker.sock
+      AWS_DEFAULT_REGION: ${AWS_DEFAULT_REGION:?}
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - aws-data:/var/lib/localstack
+volumes:
+  aws-data:
